@@ -1,1 +1,2 @@
 # weather-dashboard
+This application allows travelers to have easy access to current weather forecast, humidity, wind speed, and UV index. The user will have a visual representation weather it is sunny, cloudy, rainy, or overcast in the chosen city they wish to view.
