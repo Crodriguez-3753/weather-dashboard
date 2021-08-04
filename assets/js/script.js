@@ -3,7 +3,7 @@
  var oneCallApiURL 
  var cityInputEl = document.getElementById("weather-search")
  var formEl = document.getElementById("weather-form")
-
+// city, latitude, longitude
 $(document).ready(function () {
     var cities = [];
     var city;
@@ -20,7 +20,7 @@ $(document).ready(function () {
         $("#cityList").append(a);
       }
     }
-  
+  // search button for city 
     $("#searchButton").on("click", function (event) {
       event.preventDefault();
       var city = $("#city").val();
@@ -35,12 +35,12 @@ $(document).ready(function () {
         "https://api.openweathermap.org/data/2.5/forecast?q=" +
         city +
         "&APPID=4a59a79934685f39d5acd8c224d29d12";
-  
+        // ajax Url request
       $.ajax({
         url: queryURL,
         method: "GET",
       }).then(function (response) {
-  
+        // when recieving the coords get fahrenheit
         var latitude = response.coord.lat;
         var longitude = response.coord.lon;
         $(".currentName").text(response.name);
@@ -48,7 +48,7 @@ $(document).ready(function () {
         $(".temperature").text(
           "Current Temperature: " + adjustedTemp.toFixed(1) + "°F"
         );
-  
+            
         $(".humidity").text("Humidity: " + response.main.humidity + "%");
         $(".wind").text("Wind Speed is: " + response.wind.speed + "MPH");
         var currentSlide = response.weather[0].icon;
@@ -56,7 +56,7 @@ $(document).ready(function () {
           "http://openweathermap.org/img/wn/" + currentSlide + "@2x.png";
         $(".currentImage").attr("src", getIcon);
       });
-  
+      // ajax request for forecast for five days
       $.ajax({
         url: queryURL2,
         method: "GET",
@@ -68,7 +68,7 @@ $(document).ready(function () {
           month: "short",
           day: "2-digit",
         });
-  
+        // day 1
         $(".day1date").text("Date: " + getDate1);
         var futureTempCalc = response.list[2].main.temp * (9 / 5) - 459.67;
         $(".day1temp").text("Temp: " + futureTempCalc.toFixed(1) + "°F");
@@ -77,7 +77,7 @@ $(document).ready(function () {
         var getDay1Icon =
           "http://openweathermap.org/img/wn/" + day1Slide + "@2x.png";
         $("#day1Icon").attr("src", getDay1Icon);
-  
+        // day 2
         var getDate2 = luxon.DateTime.fromSeconds(
           response.list[10].dt
         ).toLocaleString({
@@ -92,7 +92,7 @@ $(document).ready(function () {
         var getDay2Icon =
           "http://openweathermap.org/img/wn/" + day2Slide + "@2x.png";
         $("#day2Icon").attr("src", getDay2Icon);
-  
+        // day 3
         var getDate3 = luxon.DateTime.fromSeconds(
           response.list[18].dt
         ).toLocaleString({
@@ -107,7 +107,7 @@ $(document).ready(function () {
         var getDay3Icon =
           "http://openweathermap.org/img/wn/" + day3Slide + "@2x.png";
         $("#day3Icon").attr("src", getDay3Icon);
-  
+        // day 4
         var getDate4 = luxon.DateTime.fromSeconds(
           response.list[26].dt
         ).toLocaleString({
@@ -122,7 +122,7 @@ $(document).ready(function () {
         var getDay4Icon =
           "http://openweathermap.org/img/wn/" + day4Slide + "@2x.png";
         $("#day4Icon").attr("src", getDay4Icon);
-  
+        // day 5
         var getDate5 = luxon.DateTime.fromSeconds(
           response.list[34].dt
         ).toLocaleString({
@@ -139,7 +139,7 @@ $(document).ready(function () {
         $("#day5Icon").attr("src", getDay5Icon);
       });
     });
-  
+    // clear button event
     $("#clearButton").on("click", function () {
       $("#cityList").remove();
       console.log("click");
